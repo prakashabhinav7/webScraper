@@ -1,31 +1,28 @@
-from urllib.request import urlopen as uReq
-from bs4 import BeautifulSoup as soup
+import requests
+from bs4 import BeautifulSoup as bs
+import pandas as pd
 
-my_url = 'https://www.newegg.com/Video-Cards-Devices/Category/ID-38'
-
-
-# TODO Create function for reader(to copy data from the url/list of urls)
-# TODO Create function for writing results to file/db
-
-def crawler_collector(url_to_crawl):
-    u_client = uReq(url_to_crawl)  # opens connection
-    page_html = u_client.read()  # reads the page
-    u_client.close()  # disconnect client
-    page_soup = soup(page_html, "html.parser")  # html parsing
-
-# TODO grab each product and test out the traversal for each product
-containers = page_soup.find_all("ul", {"class": "item-features"})
-
-# TODO implement try except for boundary cases
-for container in containers:
-    # brand = container.div.div.a.img["title"]
-    print(container.li)
-
-# print(container)
-# f = open('deleteme.html', 'w')
-# f.write(str(container))
-# f.close()
+my_url = 'https://www.newegg.com/p/pl?Submit=StoreIM&Depa=80&PageSize=96'
 
 
-# print(page_soup.h1)
-# print(page_soup.body.span)
+def price_tracker_df(url_to_track):
+    source = requests.get(url_to_track).text  # Get the complete text from the URL
+    soup = bs(source, "html.parser").body  # Parse the HTML using Beautiful Soup
+    dict_list = []  # List of all items and attributes i.e. list of dictionaries
+    all_items = soup.find_all('div', class_='item-info')  # Find all divs of class "item-info"
+
+    for item in all_items:
+        row_dict = {}  # Initialise dictionary
+        title = str(item.find_all('a', class_='item-title')[0].text).replace("\r\n ", "")
+        price = str(item.find_all('li', class_='price-current')[0].strong.text).replace("\r\n ", "")
+        shipping = str(item.find_all('li', class_="price-ship")[0].text).replace("\r\n ", "")
+        row = (('Title', title), ('Shipping', shipping.strip()), ('Price', price))
+        row_dict.update(row)  # New dictionary updated onto the old one
+        dict_list.append(row_dict)  # Append the new dictionary to the list of dictionaries
+    price_tracker = pd.DataFrame(dict_list, columns=['Title', 'Shipping', 'Price'])  # Write the list of dictionaries
+    # to a pandas dataframe
+
+    return price_tracker
+
+
+print(price_tracker_df(my_url))
