@@ -20,15 +20,23 @@ def price_tracker_df(url_to_track):
         row = (('Title', title), ('Shipping', shipping.strip()), ('Price', price.replace(",", "")))
         row_dict.update(row)  # New dictionary updated onto the old one
         dict_list.append(row_dict)  # Append the new dictionary to the list of dictionaries
-    price_tracker = pd.DataFrame(dict_list, columns=['Title', 'Shipping', 'Price'])  # Write the list of dictionaries
-    # to a pandas dataframe
 
-    return price_tracker['Price'].astype(str).astype(int)
+    # Condense the dataframe to make it more readable
+    price_tracker = pd.DataFrame(dict_list, columns=['Title', 'Shipping', 'Price'])  # Write the list of dictionaries]
+    price_tracker = price_tracker.head(50)
+    price_tracker['Title'] = price_tracker['Title'].str[12:30]  # Get the first 10 chars of the product
+    price_tracker = price_tracker.astype(str)  # Convert everything to string
+    return price_tracker
 
 
-price_tracker = price_tracker_df(my_url)
-plt.plot(price_tracker)
-plt.xlabel('Title')
-plt.ylabel('Price')
-plt.show()
-# price_tracker.plot.bar(x='Title', y='Price')
+def save_plot(table_to_be_plotted):
+    cell_text = []
+    for row in range(len(table)):
+        cell_text.append(table.iloc[row])
+    plt.table(cellText=cell_text, colLabels=table.columns, loc='center')
+    plt.axis('off')
+    plt.savefig('price-table.pdf', bbox_inches='tight')
+
+
+table = price_tracker_df(my_url)  # Cleaned up data for plotting
+save_plot(table)  # Save the plots
