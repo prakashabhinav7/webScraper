@@ -6,3 +6,4 @@ This is suited for websites that do not provide APIs to communicate with their c
 Further improvements could be to automate the building of all the URLs and the program could just crawl over the URLs.
 
 ![](price-table.pdf)
+![](price-table.png)
