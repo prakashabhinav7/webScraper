@@ -10,6 +10,7 @@ Further improvements could be to automate the building of all the URLs and the p
 
 <object data="https://github.com/prakashabhinav7/webScraper/blob/master/price-table.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/prakashabhinav7/webScraper/blob/master/price-table.pdf">
+        <p>https://github.com/prakashabhinav7/webScraper/blob/master/price-table.pdf</p>
         <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/prakashabhinav7/webScraper/blob/master/price-table.pdf">Download PDF</a>.</p>
     </embed>
 </object>
