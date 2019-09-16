@@ -4,5 +4,8 @@ A basic web scraper that scrapes a web page from the provided URL and creates a 
 This is suited for websites that do not provide APIs to communicate with their content e.g. small websites.
 
 Further improvements could be to automate the building of all the URLs and the program could just crawl over the URLs.
+## Bar View
+![](price-table-bar.png)
 
+## Table View
 ![](price-table.png)

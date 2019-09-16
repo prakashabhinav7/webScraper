@@ -50,6 +50,7 @@ table['Price'] = table['Price'].astype(int)
 save_barh_plot(table)
 
 #  TODO add a new file for different types of plotting(line, point, table, bar, barh, etc)
+#  TODO sort the data before display
 # def save_table_plot():
 #    cell_text = []
 #    for row in range(len(table)):
