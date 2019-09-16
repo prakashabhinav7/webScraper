@@ -24,18 +24,18 @@ def price_tracker_df(url_to_track):
     # Condense the dataframe to make it more readable
     price_tracker = pd.DataFrame(dict_list, columns=['Title', 'Shipping', 'Price'])  # Write the list of dictionaries]
     price_tracker = price_tracker.head(50)
-    price_tracker['Title'] = price_tracker['Title'].str[12:30]  # Get the first 10 chars of the product
+    price_tracker['Title'] = price_tracker['Title'].str[12:40]  # Get the first 10 chars of the product
     price_tracker = price_tracker.astype(str)  # Convert everything to string
     return price_tracker
 
 
-def save_plot(table_to_be_plotted):
+def save_plot(table):
     cell_text = []
     for row in range(len(table)):
         cell_text.append(table.iloc[row])
     plt.table(cellText=cell_text, colLabels=table.columns, loc='center')
     plt.axis('off')
-    plt.savefig('price-table.pdf', bbox_inches='tight')
+    plt.savefig('price-table.png', bbox_inches='tight', dpi=300)
 
 
 table = price_tracker_df(my_url)  # Cleaned up data for plotting
